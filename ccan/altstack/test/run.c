@@ -6,6 +6,7 @@
 #include <signal.h>
 #include <string.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <sys/mman.h>
 #include <ccan/tap/tap.h>
 #include <ccan/altstack/altstack.h>
@@ -80,9 +81,25 @@ static void *wrap(void *i)
 		ok1(call2 == (c2));					\
 	} while (0)
 
+
+#if 0
+static void sigbus_handler(int sig, siginfo_t *info, void *arg)
+{
+	diag(stderr, "SIGBUS gone?");
+	exit(77);
+}
+#endif
+
 int main(void)
 {
 	long pgsz = sysconf(_SC_PAGESIZE);
+	struct sigaction sigbus = {
+		.sa_sigaction = SIG_DFL,
+		.sa_flags = SA_SIGINFO,
+	};
+
+	sigemptyset(&sigbus.sa_mask);
+	sigaction(SIGBUS, &sigbus, NULL);
 
 	plan_tests(50);
 
