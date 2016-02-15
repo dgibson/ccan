@@ -67,7 +67,7 @@ int altstack(rlim_t max, void *(*fn)(void *), void *arg, void **out)
 	int ret = -1, undo = 0;
 	char *m;
 	struct rlimit rl_save;
-	struct sigaction sa_save;
+	struct sigaction sa_save, sa_save2;
 	int errno_save;
 
 	assert(max > 0 && fn);
@@ -101,6 +101,7 @@ int altstack(rlim_t max, void *(*fn)(void *), void *arg, void **out)
 
 		sigemptyset(&sa.sa_mask);
 		ok(sigaction(SIGSEGV, &sa, &sa_save), 1);
+		ok(sigaction(SIGBUS, &sa, &sa_save2), 1);
 		undo++;
 
 		asm volatile (
@@ -127,6 +128,7 @@ out:
 	switch (undo) {
 	case 4:
 		ok(sigaction(SIGSEGV, &sa_save, 0), 0);
+		ok(sigaction(SIGBUS, &sa_save2, 0), 0);
 	case 3:
 		ok(sigaltstack(&(stack_t) { .ss_flags = SS_DISABLE }, 0), 0);
 	case 2:
