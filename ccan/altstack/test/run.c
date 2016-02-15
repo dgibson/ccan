@@ -129,12 +129,12 @@ int main(void)
 	if (fail = 0, munmap(m_, msz_) == -1)
 		err(1, "munmap");
 
-	chkok(			altstack(1*MiB, wrap, (void *) 1000000, 0) == -1, EOVERFLOW,
+	chkok(			altstack(512*KiB, wrap, (void *) 1000000, 0) == -1, EOVERFLOW,
 		getrlimit_|setrlimit_|mmap_|sigaltstack_|sigaction_,
 		setrlimit_|munmap_|sigaltstack_|sigaction_);
 
 	// be sure segv catch is repeatable (SA_NODEFER)
-	chkok(			altstack(1*MiB, wrap, (void *) 1000000, 0) == -1, EOVERFLOW,
+	chkok(			altstack(512*KiB, wrap, (void *) 1000000, 0) == -1, EOVERFLOW,
 		getrlimit_|setrlimit_|mmap_|sigaltstack_|sigaction_,
 		setrlimit_|munmap_|sigaltstack_|sigaction_);
 
