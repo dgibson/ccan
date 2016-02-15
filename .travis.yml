@@ -8,7 +8,7 @@ compiler:
 addons:
     apt:
         packages:
-            - libjudy-dev libvorbis-dev libportaudio-dev libtalloc-dev
+            - gdb
 
 script:
         - make -j2

@@ -26,7 +26,7 @@ include Makefile-ccan
 
 fastcheck: $(MODS:%=summary-fastcheck-%)
 
-check: $(MODS:%=summary-check-%)
+check: summary-check-altstack
 
 distclean: clean
 	rm -f $(ALL_DEPENDS)
@@ -55,7 +55,8 @@ fastcheck-%: tools/ccanlint/ccanlint
 
 # Doesn't test dependencies, doesn't print verbose fail results.
 summary-check-%: tools/ccanlint/ccanlint $(OBJFILES)
-	$(CCANLINT) -s ccan/$*
+	-$(CCANLINT) -s -k ccan/$*
+	gdb -ex "handle SIGSEGV nostop" -ex r -ex bt -ex q /tmp/ccanlint-*/run
 
 summary-fastcheck-%: tools/ccanlint/ccanlint $(OBJFILES)
 	$(CCANLINT_FAST) -s ccan/$*
