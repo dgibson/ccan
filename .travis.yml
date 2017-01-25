@@ -59,6 +59,8 @@ matrix:
       apt:
         packages:
           - valgrind
+  - os: osx
+    compiler: clang
 
 script:
     - make -j2 -k quiet=1
