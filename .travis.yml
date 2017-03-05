@@ -3,65 +3,9 @@ sudo: false
 
 matrix:
   include:
-  - compiler: gcc
-    env: CFLAGS="-std=gnu99"
-  - compiler: gcc-5
-    env: GCOV="gcov-5"
-    addons:
-      apt:
-        sources:
-          - ubuntu-toolchain-r-test
-        packages:
-          - gcc-5
-  - compiler: gcc-6
-    env: GCOV="gcov-6"
-    addons:
-      apt:
-        sources:
-          - ubuntu-toolchain-r-test
-        packages:
-          - gcc-6
-  - compiler: clang
-    addons:
-      apt:
-        packages:
-          - valgrind
-  - dist: trusty
-    addons:
-      apt:
-        packages:
-          - valgrind
-    env: CFLAGS="-std=gnu99"
-    compiler: gcc
-  - dist: trusty
-    compiler: gcc-5
-    env: GCOV="gcov-5"
-    addons:
-      apt:
-        sources:
-          - ubuntu-toolchain-r-test
-        packages:
-          - gcc-5
-          - valgrind
-  - dist: trusty
-    compiler: gcc-6
-    env: GCOV="gcov-6"
-    addons:
-      apt:
-        sources:
-          - ubuntu-toolchain-r-test
-        packages:
-          - gcc-6
-          - valgrind
-  - dist: trusty
-    compiler: clang
-    addons:
-      apt:
-        packages:
-          - valgrind
   - os: osx
     compiler: clang
 
 script:
-    - make -j2 -k quiet=1
+    - make -k quiet=1
     - make -k check quiet=1
