@@ -5,7 +5,7 @@
 
 /* Test metadata */
 #define META_MAGIC 0x4d86aa82ec1892f6
-#define BUFSIZE    8192
+#define BUFSIZE    65536
 
 struct metadata {
 	uint64_t magic;

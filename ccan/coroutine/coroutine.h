@@ -47,10 +47,10 @@ struct coroutine_state;
  * COROUTINE_MIN_STKSZ - Minimum coroutine stack size
  *
  * Contains the minimum size for a coroutine stack (not including
- * overhead).  On systems with MINSTKSZ, guaranteed to be at least as
- * large as MINSTKSZ.
+ * overhead).  On systems with MINSIGSTKSZ, guaranteed to be at least
+ * as large as MINSIGSTKSZ.
  */
-#define COROUTINE_MIN_STKSZ		2048
+#define COROUTINE_MIN_STKSZ		32768
 
 /**
  * COROUTINE_STACK_MAGIC_BUF - Magic number for coroutine stacks in a user
