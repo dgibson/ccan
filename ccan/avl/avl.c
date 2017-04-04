@@ -31,7 +31,7 @@ static void freeNode(AvlNode *node);
 static AvlNode *lookup(const AVL *avl, AvlNode *node, const void *key);
 
 static bool insert(AVL *avl, AvlNode **p, const void *key, const void *value);
-static bool remove(AVL *avl, AvlNode **p, const void *key, AvlNode **ret);
+static bool remove_(AVL *avl, AvlNode **p, const void *key, AvlNode **ret);
 static bool removeExtremum(AvlNode **p, int side, AvlNode **ret);
 
 static int sway(AvlNode **p, int sway);
@@ -107,7 +107,7 @@ bool avl_remove(AVL *avl, const void *key)
 {
 	AvlNode *node = NULL;
 	
-	remove(avl, &avl->root, key, &node);
+	remove_(avl, &avl->root, key, &node);
 	
 	if (node == NULL) {
 		return false;
@@ -192,7 +192,7 @@ static bool insert(AVL *avl, AvlNode **p, const void *key, const void *value)
  *
  * Return true if the subtree's height decreased.
  */
-static bool remove(AVL *avl, AvlNode **p, const void *key, AvlNode **ret)
+static bool remove_(AVL *avl, AvlNode **p, const void *key, AvlNode **ret)
 {
 	if (*p == NULL) {
 		return false;
@@ -237,7 +237,7 @@ static bool remove(AVL *avl, AvlNode **p, const void *key, AvlNode **ret)
 			return true;
 			
 		} else {
-			if (!remove(avl, &node->lr[side(cmp)], key, ret))
+			if (!remove_(avl, &node->lr[side(cmp)], key, ret))
 				return false;
 			
 			/* If tree's balance became 0, it means the tree's height shrank due to removal. */
