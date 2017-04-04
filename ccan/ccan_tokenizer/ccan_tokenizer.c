@@ -632,12 +632,13 @@ static size_t find_line(const char *ptr, const char * const *lines, size_t line_
 
 int tok_point_lookup(struct tok_point *out, const char *ptr,
 			const struct token_list *tl) {
-	size_t line_count = tl->olines_size;
+	size_t line_count;
 	
 	memset(out, 0, sizeof(*out));
 	if (!tl)
 		return 0;
-	
+
+	line_count = tl->olines_size;
 	if (ptr >= tl->txt && ptr <= tl->txt+tl->txt_size) {
 		out->txt = ptr;
 		out->line = find_line(ptr, tl->tlines, line_count);
