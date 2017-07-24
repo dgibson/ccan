@@ -349,6 +349,7 @@ static struct test tests[] = {
 	  "#include <valgrind/memcheck.h>\n" },
 	{ "HAVE_UCONTEXT", DEFINES_EVERYTHING|EXECUTE|MAY_NOT_COMPILE,
 	  NULL, NULL,
+	  "#define _XOPEN_SOURCE 700\n"
 	  "#include <ucontext.h>\n"
 	  "static int x = 0;\n"
 	  "static char stack[2048];\n"
