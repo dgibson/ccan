@@ -129,7 +129,7 @@ static bool dgraph_check_node(struct dgraph_node *n, void *info_)
 						"%s: node %p %s edge doesnt"
 						" point back to %p\n",
 						info->abortstr, e->n[!dir],
-						!dir == DGRAPH_FROM
+						!(dir == DGRAPH_FROM)
 						? "DGRAPH_FROM" : "DGRAPH_TO",
 						n);
 					abort();
