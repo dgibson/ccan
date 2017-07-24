@@ -7,5 +7,6 @@ matrix:
     compiler: clang
 
 script:
-    - make -k quiet=1
+    - make -k
+    - ./tools/configurator/configurator -v
     - make -k check quiet=1
